@@ -26,8 +26,9 @@ LOGGER = logging.getLogger(__name__)
 
 GRAPHQL_BLAME_QUERY = """
 query($owner:String!, $repo:String!, $path:String!) {
-    repository(owner: $owner, name: $repo) {
-    object(expression: "master") {
+  repository(owner: $owner, name: $repo) {
+    defaultBranchRef {
+      target {
         ... on Commit {
         blame(path: $path){
             ranges {
@@ -41,8 +42,9 @@ query($owner:String!, $repo:String!, $path:String!) {
             }
         }
         }
+      }
     }
-    }
+  }
 }
 """
 
